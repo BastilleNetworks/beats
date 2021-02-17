@@ -80,6 +80,12 @@ func DefaultGolangCrossBuildArgs() BuildArgs {
 		args.LDFlags = append(args.LDFlags, "-extldflags=-Wl,--nxcompat")
 	}
 
+	args.Env = map[string]string{
+		"CGO_CFLAGS": "-D_FORTIFY_SOURCE=2 -O3 -fstack-protector-all",
+	}
+	args.LDFlags = append(args.LDFlags, "-linkmode=external")
+	args.ExtraFlags = append(args.ExtraFlags, "-buildmode=pie")
+
 	return args
 }
 
